@@ -1,24 +1,88 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Data;
+using System.Text.RegularExpressions;
 
-namespace Boolean_Expression_Solver
+namespace BooleanExpressionSolver
 {
-    class Program
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-        //XOR NOT OR AND = ^, ', +, *
-        public static void Main(string[] args)
+        public MainWindow()
         {
-            Console.WriteLine("YOYOYO WHATS UP MIZZIA Please enter the how many variables you wish to use");
+            InitializeComponent();
+        }
 
-            int numberOfVariables = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Infix to Postfix");
-            string userInput = Console.ReadLine();
-
-            Console.WriteLine("[TRUTH TABLE GENERATOR]");
+        private void NumberOfTerms_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
         }
+
+        private void UserInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            DataTable dt = new DataTable();
+
+            if (!string.IsNullOrEmpty(UserInput.Text))
+            {
+                int numberOfVariables = Convert.ToInt32(numberOfTerms.Text);
+                string userInput = UserInput.Text;
+
+                int biggestValue = Convert.ToInt32(Math.Pow(2, numberOfVariables)) - 1;
+                int biggestDigitLength = Convert.ToString(biggestValue, 2).Length;
+
+                DataColumn variable = new DataColumn("variable", typeof(bool));
+                DataColumn output = new DataColumn("output", typeof(bool));
+
+                for (int i = 1; i <= numberOfVariables; i++)
+                {
+                    dt.Columns.Add(new DataColumn(i.ToString(), typeof(bool)));
+                }
+                dt.Columns.Add(output);
+
+                for (int i = 0; i < Math.Pow(2, numberOfVariables); i++)
+                {
+                    string binary = Convert.ToString(i, 2);
+                    binary = binary.PadLeft(biggestDigitLength, '0');
+                    bool[] binaryExpression = binary.Select(c => c == '1').ToArray();
+
+                    DataRow inputRow = dt.NewRow();
+
+                    //Add
+                    for (int j = 0; j < binaryExpression.Length; j++)
+                    {
+                        inputRow[j] = binaryExpression[j];
+                    }
+
+                    List<string> token = Tokenize(userInput);
+                    List<string> RPN = GetRPN(token);
+                    inputRow[binaryExpression.Length] = solver(RPN, binaryExpression);
+                    dt.Rows.Add(inputRow);
+                }
+
+                TruthTable.ItemsSource = dt.DefaultView;
+
+            }
+        }
+
         public static List<string> Tokenize(string input)
         {
             List<string> TokenResult = new List<string>();
@@ -44,17 +108,13 @@ namespace Boolean_Expression_Solver
             Stack<string> s = new Stack<string>();
             List<string> PostFix = new List<string>();
 
-            Console.Write("\nEnter your expression: ");
             try
             {
                 ConvertToPostFix(token, s, ref PostFix);
-
-                Print(PostFix);
                 return PostFix;
             }
             catch (InvalidOperationException)
             {
-                Console.WriteLine("Invalid expression");
                 return null;
             }
         }
@@ -92,11 +152,11 @@ namespace Boolean_Expression_Solver
         }
         static int Priority(string c)
         {
-            if(c == "'")
+            if (c == "'")
             {
                 return 3;
             }
-            else if (c == "*" || c== "^")
+            else if (c == "*" || c == "^")
             {
                 return 2;
             }
@@ -118,13 +178,6 @@ namespace Boolean_Expression_Solver
             else
             {
                 return false;
-            }
-        }
-        static void Print(List<string> PostFix)
-        {
-            for (int i = 0; i < PostFix.Count; i++)
-            {
-                Console.Write("{0} ", PostFix[i]);
             }
         }
         public static bool solver(List<string> token, bool[] valuesOfVariables)
@@ -160,6 +213,16 @@ namespace Boolean_Expression_Solver
                 }
             }
             return stack.Pop();
+        }
+
+        private void TruthTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿<Window x:Class="BooleanExpressionSolver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BooleanExpressionSolver"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Loaded="Grid_Loaded">
+        <Button Content="START" HorizontalAlignment="Left" Margin="274,11,0,0" VerticalAlignment="Top" Width="144" Height="48" Click="Start_Click"/>
+        <DataGrid x:Name="TruthTable" HorizontalAlignment="Left" Height="348" Margin="10,64,0,0" VerticalAlignment="Top" Width="775" SelectionChanged="TruthTable_SelectionChanged"/>
+        <TextBox x:Name="UserInput" HorizontalAlignment="Left" Height="22" Margin="10,37,0,0" TextWrapping="Wrap" Text="Expression" VerticalAlignment="Top" Width="259" TextChanged="UserInput_TextChanged"/>
+        <TextBox x:Name="numberOfTerms" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Text="Number Of Terms" VerticalAlignment="Top" Width="259" TextChanged="NumberOfTerms_TextChanged"/>
+
+    </Grid>
+</Window>
