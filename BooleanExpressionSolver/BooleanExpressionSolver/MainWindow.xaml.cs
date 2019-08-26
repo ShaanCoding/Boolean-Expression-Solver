@@ -239,5 +239,10 @@ namespace BooleanExpressionSolver
         {
 
         }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Welcome To Boolean Algebra Evaluator\nType * For AND\nType + For OR\nType ^ For XOR\nType ' For NOT\nType () For Higher Order Of Operation & Grouping");
+        }
     }
 }
