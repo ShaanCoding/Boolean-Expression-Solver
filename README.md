@@ -1,5 +1,7 @@
 # Boolean Algebra Expression Solver
-This application is a simple boolean algebra expression solver coded in C# using WPF. The purpose of this program was to help me learn WPF as well as utilise reverse polish notation and the shunting yard algorithm. This application takes a boolean expression as an input and outputs its corresponding truth table.
+This application is a simple Boolean algebra expression solver coded in C# using WPF. The purpose of this program was to help me learn WPF as well as utilize reverse polish notation and the shunting yard algorithm. This application takes a Boolean expression as an input and outputs its corresponding truth table.
+
+![Main Menu](Images/mainMenu.png)
 
 ## How To Use
 1. Insert the number of terms you wish to evaluate in the "Number Of Terms" textbox
